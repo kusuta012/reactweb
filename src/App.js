@@ -123,7 +123,7 @@ function App() {
         <Projects />
         <div className="space3"></div>
         <ContactMe />
-        <Analytics />
+        <Analytics mode={'production'} />;
     </>
   );
 }
