@@ -83,7 +83,7 @@ function App() {
         </div>
         <div className="space4">
           <p className="text-lg">
-            I'm a 10th grader excited about coding. I built Discord bots in Python and played with web development using React and Tailwind CSS. Still learning, but I already made some projects!
+            I'm a 10th grader excited about coding. I built Discord bots in Python and played with web development using React and Tailwind CSS. Still learning, but I have already made some projects!
           </p>
         </div>
         <div className="space3"></div>
