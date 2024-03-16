@@ -3,7 +3,6 @@ import Typing from 'react-typing-effect';
 import skills from "./skills";
 import Projects from "./projects";
 import ContactMe from "./contactme";
-import { Analytics } from "@vercel/analytics/react"; // Import Analytics component
 import "./App.css";
 
 function App() {
@@ -48,7 +47,6 @@ function App() {
 
   return (
     <>
-      <Analytics id="YOUR_VERCEL_ANALYTICS_ID"> {/* Add the Analytics component */}
         <div className="light-bokeh" style={{ left: cursorPosition.x, top: cursorPosition.y }}></div>
         <header className="container mx-auto py-4">
           <nav className="flex items-center justify-between px-4 py-2 bg-gray-800">
@@ -124,7 +122,6 @@ function App() {
         <Projects />
         <div className="space3"></div>
         <ContactMe />
-      </Analytics>
     </>
   );
 }
