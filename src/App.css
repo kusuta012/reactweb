@@ -1,0 +1,346 @@
+/* Reset default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #240A34;
+  color: #ffffff; /* White text */
+}
+
+/* Container styles */
+.container {
+  max-width: 960px;
+  margin: 80px auto 0; /* Add margin from the top */
+  padding: 20px;
+}
+
+/* Heading styles */
+h1 {
+  font-size: clamp(40px, 8vw, 80px); /* Responsive font size */
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: clamp(2rem, 5vw, 6rem);
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 20px;
+  
+}
+
+/* Navbar styles */
+nav {
+  position: fixed; /* Fix the navigation bar */
+  top: 20px; /* Add some space from the top */
+  left: 20px; /* Add some space from the left */
+  display: flex; /* Use flexbox for layout */
+  justify-content: space-between; /* Space items evenly */
+  align-items: center; /* Align items vertically */
+  width: calc(100% - 40px); /* Set width to fill remaining space */
+}
+
+nav img {
+  height: 40px; /* Adjust the height of the logo */
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex; /* Use flexbox for layout */
+}
+
+nav ul li {
+  margin: 0 10px;
+}
+
+nav ul li:first-child {
+  margin-left: 0; /* Remove margin from the first list item */
+}
+
+nav ul li:last-child {
+  margin-right: 0; /* Remove margin from the last list item */
+}
+
+nav ul li a,
+nav ul li button { /* Apply same styles to button */
+  color: #5F374B;
+  background-color: transparent;
+  border: none;
+  text-decoration: none;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+nav ul li a:hover,
+nav ul li button:hover { /* Apply same hover effect */
+  background-color: transparent;
+  border: none;
+  color: #EABE6C;
+  cursor: pointer; /* Ensure cursor changes on hover */
+}
+
+/* Typing animation styles (reset) */
+.typing-container {
+  font-size: x-large;
+  display: inline-block; /* Maintain inline-block for side-by-side placement */
+  overflow: hidden; /* Keep overflow hidden */
+  white-space: nowrap; /* Keep text on one line */
+  border-right: none; /* Remove the typing effect border */
+  animation: none; /* Remove any existing animation */
+} 
+
+/* Cursor styles (ensure only one element) */
+.cursor {
+  /* Assuming there's only one element with this class */
+  animation: blink 0.5s step-end infinite; /* Blinking animation for the cursor */
+}
+
+@keyframes blink {
+  from, to { opacity: 1 }
+  50% { opacity: 0 }
+}
+
+.light-bokeh {
+  position: fixed;
+  width: 1000px; /* Set the initial size of the bokeh */
+  height: 999px; /* Set the initial size of the bokeh */
+  border-radius: 70%; /* Make it circular */
+  background: radial-gradient(circle, rgba(91, 29, 129, 0.814) 18%, rgba(255, 255, 255, 0) 60%);
+  pointer-events: none;
+  z-index: -1;
+  transform: translate(-50%, -50%);
+
+  /* Shadow (subtle) */}
+
+/* About section styles */
+#about {
+  text-align: left; /* Align content to the left */
+  margin-top: 40px; /* Add some space between sections */
+}
+
+#about h2 {
+  font-size: 2rem; /* Adjust heading size */
+  font-weight: bold;
+  margin-bottom: 20px; /* Add space below heading */
+}
+
+#about p {
+  font-size:large;
+  line-height: 1.3;
+  color: #8892b0;
+  margin-bottom: 18px; /* Add space below paragraphs */
+}
+
+#about ul {
+  list-style-type: none;
+  display: grid; /* Use CSS Grid for layout */
+  grid-template-columns: repeat(2, 1fr); /* Create 3 columns with equal width */
+  grid-gap: 20px; /* Add space between grid items */
+  margin-top: 20px; /* Add space above the list */
+}
+
+
+
+#about ul li {
+  position: relative; /* Set position to relative */
+  padding-left: 20px; /* Adjust padding to accommodate the symbol */
+  color: #8892b0;
+}
+
+#about ul li::before {
+  content: "▹";
+  position: absolute; /* Set position to absolute */
+  left: 0; /* Position it at the start of the list item */
+  color: #FFEDD8;
+  font-size: 14px;
+  line-height: 12px;
+}
+
+
+.text-lg{
+  font-size: larger;
+  margin: 20px 0px 0px;
+  max-width: 540px;
+}
+
+.space1{
+  margin-top: 20px;
+}
+
+.space2{
+  margin-top: 15px;
+}
+
+.space3{
+  margin-top: 250px  ;
+}
+
+.space4{
+  margin-top: 50px;
+}
+
+
+.logo-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-button:focus {
+  outline: none;
+}
+
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust width as needed */
+  gap: 1rem;
+}
+
+.skill-card {
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.skill-logo {
+  width: 100px; /* Adjust the width as needed */
+  height: 100px; /* Adjust the height as needed */
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.skill-logo:hover {
+  filter: grayscale(0%);
+}
+
+.skill-name {
+  font-weight: bold;
+  text-align: center;
+}
+
+.skill-progress-bar {
+  margin-top: 0.5rem;
+}
+
+.skill-progress-bar-fill {
+  height: 6px;
+  background-color: #3182ce;
+  border-radius: 3px;
+}
+
+.progress-number {
+  display: block;
+  font-weight: bold;
+  margin-right: 5px; /* Adjust spacing as needed */
+}
+
+/* projects.css */
+
+.projects-container {
+  max-width: 960px;
+  margin: 80px auto 0;
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjust width as needed */
+  gap: 1rem;
+}
+
+
+.project-card {
+  position: relative;
+  width: 400px; /* Adjust width as needed */
+  height: 450x; /* Adjust height as needed */
+  overflow: hidden;
+}
+
+.project-image {
+  width: 100%;
+  max-width: 999px;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover; /* Ensure the image covers the entire container */
+  transition: filter 0.3s ease; /* Smooth transition effect */
+}
+
+.project-image:hover {
+  filter: grayscale(100%); /* Convert the image to grayscale on hover */
+}
+
+.project-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 20px; /* Adjust font size as needed */
+  font-weight: bold;
+  text-align: center;
+  opacity: 0; /* Initially hidden */
+  transition: opacity 0.3s ease; /* Smooth transition effect */
+  pointer-events: none; /* Ignore pointer events */
+}
+
+.project-card:hover .project-title {
+  opacity: 1; /* Show title on hover */
+}
+
+
+/* contact-me.css */
+
+.contact-me-container {
+  max-width: 960px;
+  margin: 80px auto 0;
+  padding: 20px;
+}
+
+.contact-info {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.contact-info > div {
+  background-color: #460e69;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.416);
+}
+
+.contact-info p {
+  font-size: 1.2rem;
+  margin-bottom: 5px;
+}
+
+.contact-info a {
+  color: #3182ce;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-info a:hover {
+  color: #2c5282;
+}
