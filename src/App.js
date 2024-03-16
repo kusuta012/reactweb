@@ -3,6 +3,7 @@ import Typing from 'react-typing-effect';
 import skills from "./skills";
 import Projects from "./projects";
 import ContactMe from "./contactme";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import "./App.css";
 
 function App() {
@@ -122,6 +123,7 @@ function App() {
         <Projects />
         <div className="space3"></div>
         <ContactMe />
+        <SpeedInsights/>
     </>
   );
 }
