@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Typing from 'react-typing-effect';
+import Analytics from '@vercel/analytics'
 import skills from "./skills";
 import Projects from "./projects";
 import ContactMe from "./contactme";
@@ -122,6 +123,7 @@ function App() {
         <Projects />
         <div className="space3"></div>
         <ContactMe />
+        <Analytics />
     </>
   );
 }
