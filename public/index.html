@@ -40,23 +40,7 @@
 
   if (isInstagramBrowser) {
     // Display a message encouraging users to open your website in Chrome
-    document.body.innerHTML = `
-      <div style="text-align: center; padding: 20px;">
-        <h1>For the best experience, please open this website in Chrome browser.</h1>
-        <p>You can copy the link below and paste it into Chrome:</p>
-        <input type="text" id="link" value="${window.location.href}" readonly style="width: 80%; margin-bottom: 10px;">
-        <button onclick="copyLink()">Copy Link</button>
-        <p>Alternatively, you can manually open Chrome and paste the link there.</p>
-      </div>
-    `;
-
-    // Function to copy link
-    const copyLink = () => {
-      const linkInput = document.getElementById('link');
-      linkInput.select();
-      document.execCommand('copy');
-      alert('Link copied to clipboard! Paste it into Chrome to open.');
-    };
+    alert("For the best experience, please open this website in Chrome browser.");
   }
 </script>
 
