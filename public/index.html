@@ -33,49 +33,30 @@
       });
     });
 </script>
+
 <script>
-  // Function to send data to Discord webhook
-  const sendToWebhook = async (data) => {
-    try {
-      const response = await fetch('https://discord.com/api/webhooks/1218597113911316551/f1YrteXYqN2U-cBjs4DC17ICJjLhIeYyAu80GNF8yR7DvTna9WZzZREfay7sczGA2bJD', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      console.log('Webhook response:', response.statusText);
-    } catch (error) {
-      console.error('Error sending data to webhook:', error);
-    }
-  };
-
-  // Function to fetch IP address and send it to webhook
-  const logIpAddress = async () => {
-    try {
-      const response = await fetch('https://api.ipify.org?format=json');
-      const data = await response.json();
-      const ipAddress = data.ip;
-      console.log(`Visitor IP address: ${ipAddress}`);
-      
-      // Send IP address to Discord webhook
-      sendToWebhook(`Instagram visitor`), { ipAddress };
-    } catch (error) {
-      console.error('Error fetching IP address:', error);
-      
-      // Send error to Discord webhook
-      sendToWebhook({ error: error.message });
-    }
-  };
-
   // Check if the user agent contains "Instagram"
   const isInstagramBrowser = navigator.userAgent.includes("Instagram");
 
   if (isInstagramBrowser) {
-    // Log IP address and any errors to Discord webhook
-    logIpAddress();
-    
-    ;
+    // Display a message encouraging users to open your website in Chrome
+    document.body.innerHTML = `
+      <div style="text-align: center; padding: 20px;">
+        <h1>For the best experience, please open this website in Chrome browser.</h1>
+        <p>You can copy the link below and paste it into Chrome:</p>
+        <input type="text" id="link" value="${window.location.href}" readonly style="width: 80%; margin-bottom: 10px;">
+        <button onclick="copyLink()">Copy Link</button>
+        <p>Alternatively, you can manually open Chrome and paste the link there.</p>
+      </div>
+    `;
+
+    // Function to copy link
+    const copyLink = () => {
+      const linkInput = document.getElementById('link');
+      linkInput.select();
+      document.execCommand('copy');
+      alert('Link copied to clipboard! Paste it into Chrome to open.');
+    };
   }
 </script>
 
