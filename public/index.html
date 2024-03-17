@@ -33,6 +33,15 @@
       });
     });
 </script>
+<script>
+  const userAgent = navigator.userAgent.toLowerCase();
+  const isInstagramBrowser = userAgent.includes('instagram');
+
+  if (isInstagramBrowser) {
+    // Redirect to open in default browser
+    window.location.href = 'https://your-website-url.com';
+  }
+</script>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/weblogo.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
