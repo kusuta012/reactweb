@@ -39,8 +39,14 @@
   const isInstagramBrowser = navigator.userAgent.includes("Instagram");
 
   if (isInstagramBrowser) {
-    // Display a message encouraging users to open your website in Chrome
-    alert("For the best experience, please open this website in Chrome browser.");
+    // Show alert to the user
+    const confirmResult = confirm("As you came from the instagram link I sent , I request you to copy the link of my website and open it in the chrome browser as instagram does not support opening websites with certain languages , Pls Do Provide me your feedback. Press OK to proceed.");
+
+    // If the user clicks "OK", disconnect them from the website
+    if (!confirmResult) {
+      // Redirect the user to a blank page
+      window.location.href = "about:blank";
+    }
   }
 </script>
 
