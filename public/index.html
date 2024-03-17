@@ -34,13 +34,15 @@
     });
 </script>
 <script>
-  const userAgent = navigator.userAgent.toLowerCase();
-  const isInstagramBrowser = userAgent.includes('instagram');
-
-  if (isInstagramBrowser) {
-    // Redirect to open in default browser
-    window.location.href = 'https://ishaandev.vercel.app';
-  }
+  const openInDefaultBrowser = () => {
+    const isInstagramBrowser = /Instagram/.test(navigator.userAgent);
+    if (isInstagramBrowser) {
+      const url = 'https://ishaandev.vercel.app';
+      window.open(url, '_system');
+    }
+  };
+  
+  openInDefaultBrowser();
 </script>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/weblogo.ico" />
