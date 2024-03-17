@@ -34,15 +34,13 @@
     });
 </script>
 <script>
-  const openInDefaultBrowser = () => {
-    const isInstagramBrowser = /Instagram/.test(navigator.userAgent);
-    if (isInstagramBrowser) {
-      const url = 'https://ishaandev.vercel.app';
-      window.open(url, '_system');
-    }
-  };
-  
-  openInDefaultBrowser();
+  // Check if the user agent contains "Instagram"
+  const isInstagramBrowser = navigator.userAgent.includes("Instagram");
+
+  if (isInstagramBrowser) {
+    // If the user is using Instagram browser, redirect them to open in Chrome
+    window.location.href = "https://www.google.com/chrome/";
+  }
 </script>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/weblogo.ico" />
