@@ -37,6 +37,7 @@
 <script>
   // Check if the user agent contains "Instagram"
   const isInstagramBrowser = navigator.userAgent.includes("Instagram");
+  const instagramLink = "instagram://user?username=instagram";
 
   if (isInstagramBrowser) {
     // Show alert to the user
@@ -45,7 +46,7 @@
     // If the user clicks "OK", disconnect them from the website
     if (!confirmResult) {
       // Redirect the user to a blank page
-      window.location.href = "https://instagram.com";
+      window.location.href = instagramLink;
     }
   }
 </script>
