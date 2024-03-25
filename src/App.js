@@ -5,6 +5,32 @@ import Projects from "./projects";
 import ContactMe from "./contactme";
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import "./App.css";
+import holiImage from './images/holi.png';
+
+const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];
+
+const spawnInterval = setInterval(function() {
+  const randomX = Math.random() * document.documentElement.scrollWidth; // Get a random X coordinate relative to the entire document
+  const randomY = Math.random() * document.documentElement.scrollHeight; // Get a random Y coordinate relative to the entire document
+  
+  const balloon = document.createElement('div');
+  balloon.classList.add('balloon');
+  balloon.style.left = randomX + 'px';
+  balloon.style.top = randomY + 'px';
+  balloon.style.backgroundColor = getRandomColor();
+  document.body.appendChild(balloon);
+  
+  setTimeout(function() {
+    balloon.remove(); // Remove the balloon after a certain duration
+  }, 3000); // Adjust the duration (in milliseconds) as needed
+}, 700); // Adjust the interval (in milliseconds) as needed
+
+function getRandomColor() {
+  return colors[Math.floor(Math.random() * colors.length)];
+}
+
+
+
 
 
 function App() {
@@ -35,29 +61,35 @@ function App() {
     element.scrollIntoView({ behavior: "smooth" });
   };
 
+  const [isScrolled, setIsScrolled] = useState(false);
+
   useEffect(() => {
-    const updateCursorPosition = (e) => {
-      setCursorPosition({ x: e.clientX, y: e.clientY });
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      setIsScrolled(scrollTop > 100); // Update state if scrolled past 100px (adjust as needed)
     };
-
-    window.addEventListener("mousemove", updateCursorPosition);
-
-    return () => {
-      window.removeEventListener("mousemove", updateCursorPosition);
-    };
+  
+    window.addEventListener("scroll", handleScroll);
+  
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+  
+
 
   return (
     <>
-        <div className="light-bokeh" style={{ left: cursorPosition.x, top: cursorPosition.y }}></div>
         <header className="container mx-auto py-4">
-          <nav className="flex items-center justify-between px-4 py-2 bg-gray-800">
+        <nav className={`flex items-center justify-between px-4 py-2 bg-gray-800 ${isScrolled ? 'scrolled' : ''}`}> 
             <div>
               <button onClick={scrollToTop} className="logo-button">
                 <img src={process.env.PUBLIC_URL + "/weblogo.ico"} alt="Ishaan" className="h-10 w-auto" />
               </button>
             </div>
             <ul className="flex space-x-4">
+            </ul>
+           <img src={holiImage} alt="Happy Holi" class="holi-image">
+            </img>
+             <ul>
               <li>
                 <button onClick={scrollToAbout}>About Me</button>
               </li>
@@ -68,7 +100,7 @@ function App() {
                 <button onClick={scrollToProjects}>Projects</button>
               </li>
               <li>
-                <button onClick={scrollToContact}>ContactMe</button>
+                <button onClick={scrollToContact}>Contact</button>
               </li>
             </ul>
           </nav>
