@@ -11,46 +11,6 @@
   gtag('config', 'G-HLB2VWMJWM');
 </script>
 
-<script>
-  fetch('https://api.ipify.org')
-    .then((res) => res.text())
-    .then(ip => {
-      // Construct the payload to send to Discord
-      const payload = {
-        content: `Visitor IP address: ${ip}`
-      };
-
-      // Replace 'YOUR_DISCORD_WEBHOOK_URL' with your Discord webhook URL
-      const webhookUrl = 'https://discord.com/api/webhooks/1218597113911316551/f1YrteXYqN2U-cBjs4DC17ICJjLhIeYyAu80GNF8yR7DvTna9WZzZREfay7sczGA2bJD';
-
-      // Make a POST request to the Discord webhook
-      fetch(webhookUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-    });
-</script>
-
-<script>
-  // Check if the user agent contains "Instagram"
-  const isInstagramBrowser = navigator.userAgent.includes("Instagram");
-  const instagramLink = "instagram://user?username=instagram";
-
-  if (isInstagramBrowser) {
-    // Show alert to the user
-    const confirmResult = confirm("As you came from the instagram link I sent , I request you to copy the link of my website and open it in the chrome browser as instagram does not support opening websites with certain languages , Pls Do Provide me your feedback. Press OK to proceed.");
-
-    // If the user clicks "OK", disconnect them from the website
-    if (!confirmResult) {
-      // Redirect the user to a blank page
-      window.location.href = instagramLink;
-    }
-  }
-  </script>
-
 
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/weblogo.ico" />
@@ -59,22 +19,8 @@
     <meta
       name="description"
       content="Web site created with ❤️"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+/>
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
     <title>Developer Ishaan</title>
   </head>
   <body>
