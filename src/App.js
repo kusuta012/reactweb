@@ -58,7 +58,7 @@ function App() {
       try {
         const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
           headers: {
-            'Authorization': 'Bearer BQBWWR641ijPkQpgRB8_5LALVj-GyvHg6WRZuHgprayI4WeMcnrEAd9aPY4FG6rqvkO5BT3d5azjM3jycJaAbCcYSRQPLcqyZuxYxuy62Ub1prleMFP6Qa0aogkej2pFB9COEOqy64Fp4FIMnwYYpzidPbq1AQLhYV_csUKI_dA8nFcolmfpN9xk2nC2R_VpnztDoXY'
+            'Authorization': 'Bearer BQCJ9IV2FXKKmyNE3wdrVI_eEPq7VjNuS3ZlrZEtFqLUAyR19PkNJ1CQUE1JUpjxslQzYPkA58aBCSFqqpvGzkNkr7zXza7grPAEolB0lnqDaU1XQXx8pwA8pBmmcNSvUhdv0GZfyagm5ce_NXOhQIzwdsRN77nNIDVDFRDdCgFsyUemrmFdlQFFaGdpBTvno-hDVs0'
           }
         });
 
@@ -69,14 +69,13 @@ function App() {
             artists: data.item.artists.map(artist => artist.name).join(', '),
             albumCover: data.item.album.images[0].url
           });
-        } else if (response.status === 204) {
-          setTrackInfo({
-            name: 'Not Playing',
-            artists: 'Not Playing',
-            albumCover: '' // You can add a default image here if needed
-          });
         } else {
-          throw new Error('Failed to fetch currently playing track');
+          // No track is currently playing
+          setTrackInfo({
+            name: "",
+            artists: "",
+            albumCover: ""
+          });
         }
       } catch (error) {
         console.error('Error fetching currently playing track:', error.message);
@@ -86,21 +85,14 @@ function App() {
             artists: 'Ishaan will fix it asap',
             albumCover: '' // You can add a default image here if needed
           });
-        } else {
-          // Clear track info in case of other errors
-          setTrackInfo({
-            name: 'Error',
-            artists: 'Error',
-            albumCover: 'Error'
-          });
         }
       }
     };
 
-    const intervalId = setInterval(fetchTrackInfo, 5000); // Fetch track info every 5 seconds
+    const intervalId = setInterval(fetchTrackInfo, 7000); // Fetch track info every 15 seconds
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [])
 
  
   return (
@@ -185,9 +177,15 @@ function App() {
           <img id="spotify-logo" src={spotifyLogo} alt="Spotify Logo" />
           <div id="track-info">
             <p id="listening-message">Ishaan is currently listening to on Spotify:</p>
-            <img id="album-cover" src={trackInfo.albumCover} alt="Album Cover" />
-            <div id="track-name">{trackInfo.name}</div>
-            <div id="artist">{trackInfo.artists}</div>
+            {trackInfo.albumCover ? (
+              <>
+                <img id="album-cover" src={trackInfo.albumCover} alt="Album Cover" />
+                <div id="track-name">{trackInfo.name}</div>
+                <div id="artist">{trackInfo.artists}</div>
+              </>
+            ) : (
+              <p>No track currently playing</p>
+            )}
           </div>
         </div>
     </>
