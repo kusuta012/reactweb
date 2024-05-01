@@ -370,28 +370,62 @@ nav ul li button:hover { /* Apply same hover effect */
   }
 }
 
-.spotify-container {
+
+#spotify-container {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #ffffff;
+  bottom: 20px; /* Adjust position from the bottom */
+  left: 20px; /* Adjust position from the left */
+  display: flex;
+  align-items: center;
+}
+
+#spotify-logo {
+  width: 50px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+  border-radius: 50%;
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: transform 0.3s ease; /* Add transition for smooth animation */
+}
+
+#spotify-logo:hover {
+  transform: scale(1.1); /* Zoom in effect on hover */
+}
+
+#track-info {
+  display: none; /* Hide track info by default */
+  position: absolute;
+  bottom: -170px; /* Adjust position to be below the Spotify logo */
+  left: 0;
+  width: 200px; /* Adjust width as needed */
+  background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
   padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  z-index: 9999;
+  border-radius: 10px;
+  transition: bottom 0.3s ease; /* Add transition for smooth animation */
 }
 
-.spotify-container p {
-  margin: 0;
+#spotify-container:hover #track-info {
+  display: block; /* Display track info on hover */
+  bottom: 60px; /* Adjust position to show above the Spotify logo */
 }
 
-.spotify-container .song-title {
+#album-cover {
+  width: 100px; /* Adjust size as needed */
+  height: 100px; /* Adjust size as needed */
+  border-radius: 5px;
+}
+
+#track-name,
+#artist {
+  margin-top: 10px;
+  font-size: 14px; /* Adjust font size */
   font-weight: bold;
+  color: #ffffff; /* White text */
+  text-align: center;
 }
 
-.spotify-container .song-artist {
-  font-style: italic;
+#listening-message {
+  font-size: 12px; /* Adjust font size */
+  color: #ffffff; /* White text */
+  text-align: center;
+  margin-top: 6px;
 }
-
-

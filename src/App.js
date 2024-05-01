@@ -3,13 +3,17 @@ import Typing from 'react-typing-effect';
 import skills from "./skills";
 import Projects from "./projects";
 import ContactMe from "./contactme";
-import './spotify';
-import { SpeedInsights } from "@vercel/speed-insights/react"
+import spotifyLogo from './logos/spot.png';
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
-
 
 function App() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [trackInfo, setTrackInfo] = useState({
+    name: "",
+    artists: "",
+    albumCover: ""
+  });
 
   const scrollToAbout = () => {
     const aboutSection = document.getElementById("about");
@@ -36,8 +40,8 @@ function App() {
     element.scrollIntoView({ behavior: "smooth" });
   };
 
-  
-  
+
+  // Define scrollToSkills, scrollToProjects, scrollToContact, scrollToTop functions here...
 
   useEffect(() => {
     const updateCursorPosition = (e) => {
@@ -51,6 +55,42 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const fetchTrackInfo = async () => {
+      try {
+        const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
+          headers: {
+            'Authorization': 'Bearer BQBWWR641ijPkQpgRB8_5LALVj-GyvHg6WRZuHgprayI4WeMcnrEAd9aPY4FG6rqvkO5BT3d5azjM3jycJaAbCcYSRQPLcqyZuxYxuy62Ub1prleMFP6Qa0aogkej2pFB9COEOqy64Fp4FIMnwYYpzidPbq1AQLhYV_csUKI_dA8nFcolmfpN9xk2nC2R_VpnztDoXY'
+          }
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setTrackInfo({
+            name: data.item.name,
+            artists: data.item.artists.map(artist => artist.name).join(', '),
+            albumCover: data.item.album.images[0].url
+          });
+        } else {
+          throw new Error('Failed to fetch currently playing track');
+        }
+      } catch (error) {
+        console.error('Error fetching currently playing track:', error.message);
+        // Clear track info in case of error
+        setTrackInfo({
+          name: 'Error',
+          artists: 'Error',
+          albumCover: 'Error'
+        });
+      }
+    };
+
+    const intervalId = setInterval(fetchTrackInfo, 5000); // Fetch track info every 5 seconds
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+ 
   return (
     <>
         <div className="light-bokeh" style={{ left: cursorPosition.x, top: cursorPosition.y }}></div>
@@ -129,6 +169,17 @@ function App() {
         <div className="space3"></div>
         <ContactMe />
         <SpeedInsights/>
+        <div id="spotify-container">
+  <img id="spotify-logo" src={spotifyLogo} alt="Spotify Logo" />
+  <div id="track-info">
+    <p id="listening-message">Ishaan is currently listening to on Spotify:</p>
+    <img id="album-cover" src={trackInfo.albumCover} alt="Album Cover" />
+    <div id="track-name">{trackInfo.name}</div>
+    <div id="artist">{trackInfo.artists}</div>
+  </div>
+</div>
+
+
     </>
   );
 }
