@@ -3,6 +3,7 @@ import Typing from 'react-typing-effect';
 import skills from "./skills";
 import Projects from "./projects";
 import ContactMe from "./contactme";
+import CurrentlyPlaying from './CurrentlyPlaying';
 import { SpeedInsights } from "@vercel/speed-insights/react"
 import "./App.css";
 
@@ -34,6 +35,16 @@ function App() {
     const element = document.documentElement;
     element.scrollIntoView({ behavior: "smooth" });
   };
+
+  const Clute = () => {
+    return (
+      <div className="App">
+        <h1>My Spotify App</h1>
+        <CurrentlyPlaying />
+      </div>
+    );
+  };
+  
 
   useEffect(() => {
     const updateCursorPosition = (e) => {
