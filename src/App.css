@@ -370,36 +370,28 @@ nav ul li button:hover { /* Apply same hover effect */
   }
 }
 
-
-/* Spotify.css */
-
-/* Spotify container styles */
 .spotify-container {
-  max-width: 960px;
-  margin: 80px auto 0; /* Add margin from the top */
-  padding: 20px;
-  background-color: #460e69; /* Purple background */
-  border-radius: 8px; /* Rounded corners */
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.416); /* Shadow */
-  color: #ffffff; /* White text */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 9999;
 }
 
-/* Heading styles */
-.spotify-heading {
-  font-size: 2rem; /* Adjust heading size */
+.spotify-container p {
+  margin: 0;
+}
+
+.spotify-container .song-title {
   font-weight: bold;
-  margin-bottom: 20px; /* Add space below heading */
 }
 
-/* Currently playing styles */
-.currently-playing {
-  font-size: 1.5rem; /* Adjust font size */
-  margin-bottom: 20px; /* Add space below */
+.spotify-container .song-artist {
+  font-style: italic;
 }
 
-/* Track information styles */
-.track-info {
-  font-size: 1.2rem; /* Adjust font size */
-}
 
-/* Add additional styles as needed */
