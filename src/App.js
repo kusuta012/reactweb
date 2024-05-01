@@ -41,8 +41,6 @@ function App() {
   };
 
 
-  // Define scrollToSkills, scrollToProjects, scrollToContact, scrollToTop functions here...
-
   useEffect(() => {
     const updateCursorPosition = (e) => {
       setCursorPosition({ x: e.clientX, y: e.clientY });
@@ -71,17 +69,31 @@ function App() {
             artists: data.item.artists.map(artist => artist.name).join(', '),
             albumCover: data.item.album.images[0].url
           });
+        } else if (response.status === 204) {
+          setTrackInfo({
+            name: 'Not Playing',
+            artists: 'Not Playing',
+            albumCover: '' // You can add a default image here if needed
+          });
         } else {
           throw new Error('Failed to fetch currently playing track');
         }
       } catch (error) {
         console.error('Error fetching currently playing track:', error.message);
-        // Clear track info in case of error
-        setTrackInfo({
-          name: 'Error',
-          artists: 'Error',
-          albumCover: 'Error'
-        });
+        if (error.code >= 401 && error.code <= 599) {
+          setTrackInfo({
+            name: 'Token Expired',
+            artists: 'Ishaan will fix it asap',
+            albumCover: '' // You can add a default image here if needed
+          });
+        } else {
+          // Clear track info in case of other errors
+          setTrackInfo({
+            name: 'Error',
+            artists: 'Error',
+            albumCover: 'Error'
+          });
+        }
       }
     };
 
@@ -170,16 +182,14 @@ function App() {
         <ContactMe />
         <SpeedInsights/>
         <div id="spotify-container">
-  <img id="spotify-logo" src={spotifyLogo} alt="Spotify Logo" />
-  <div id="track-info">
-    <p id="listening-message">Ishaan is currently listening to on Spotify:</p>
-    <img id="album-cover" src={trackInfo.albumCover} alt="Album Cover" />
-    <div id="track-name">{trackInfo.name}</div>
-    <div id="artist">{trackInfo.artists}</div>
-  </div>
-</div>
-
-
+          <img id="spotify-logo" src={spotifyLogo} alt="Spotify Logo" />
+          <div id="track-info">
+            <p id="listening-message">Ishaan is currently listening to on Spotify:</p>
+            <img id="album-cover" src={trackInfo.albumCover} alt="Album Cover" />
+            <div id="track-name">{trackInfo.name}</div>
+            <div id="artist">{trackInfo.artists}</div>
+          </div>
+        </div>
     </>
   );
 }
