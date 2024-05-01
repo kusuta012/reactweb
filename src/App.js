@@ -61,15 +61,19 @@ function App() {
             'Authorization': 'Bearer BQCz3e_leoxjTsV72s08qggwb9oG2IwrgEs3dCLnY2VAYpjmTq6_JgclVi3TrdQZjVTdF39jd2N8uvKbYszB53tmce05iDIH9kENWvssbQO3iXqilumFdmc4kKtSEKtmXESqDcIO7uKi8IXCCzS3byi5IckAAk5ilUZYKI7IKwepZy2wGWdDj8halNYj85ohxL-iWq8'
           }
         });
-  
+    
+        console.log('Response status:', response.status);
+    
         if (response.ok) {
           const data = await response.json();
+          console.log('Track data:', data);
           setTrackInfo({
             name: data.item.name,
             artists: data.item.artists.map(artist => artist.name).join(', '),
             albumCover: data.item.album.images[0].url
           });
         } else if (response.status === 401) {
+          console.log('Access token expired');
           // If access token expired
           setTrackInfo({
             name: 'Token Expired',
@@ -177,11 +181,20 @@ function App() {
         <ContactMe />
         <SpeedInsights/>
         <div id="spotify-container">
-          <img id="spotify-logo" src={spotifyLogo} alt="Spotify Logo" />
-          <div id="track-info">
-            <p id="listening-message">Ishaan is currently listening to on Spotify:</p>
-          </div>
-        </div>
+  <img id="spotify-logo" src={spotifyLogo} alt="Spotify Logo" />
+  <div id="track-info">
+    <p id="listening-message">Ishaan is currently listening to on Spotify:</p>
+    {trackInfo.albumCover ? (
+      <>
+        <img id="album-cover" src={trackInfo.albumCover} alt="Album Cover" />
+        <div id="track-name">{trackInfo.name}</div>
+        <div id="artist">{trackInfo.artists}</div>
+      </>
+    ) : (
+      <p>No track currently playing</p>
+    )}
+  </div>
+</div>
     </>
   );
 }
