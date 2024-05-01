@@ -179,15 +179,6 @@ function App() {
           <img id="spotify-logo" src={spotifyLogo} alt="Spotify Logo" />
           <div id="track-info">
             <p id="listening-message">Ishaan is currently listening to on Spotify:</p>
-            {trackInfo.albumCover ? (
-              <>
-                <img id="album-cover" src={trackInfo.albumCover} alt="Album Cover" />
-                <div id="track-name">{trackInfo.name}</div>
-                <div id="artist">{trackInfo.artists}</div>
-              </>
-            ) : (
-              <p>No track currently playing</p>
-            )}
           </div>
         </div>
     </>
