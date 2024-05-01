@@ -69,7 +69,7 @@ function App() {
             artists: data.item.artists.map(artist => artist.name).join(', '),
             albumCover: data.item.album.images[0].url
           });
-        }  if (response.status === 401) {
+        } else if (response.status === 401) {
           // If access token expired
           setTrackInfo({
             name: 'Token Expired',
@@ -94,6 +94,7 @@ function App() {
   
     return () => clearInterval(intervalId);
   }, []);
+  
   
 
  
