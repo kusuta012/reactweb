@@ -58,10 +58,10 @@ function App() {
       try {
         const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
           headers: {
-            'Authorization': 'Bearer BQCJ9IV2FXKKmyNE3wdrVI_eEPq7VjNuS3ZlrZEtFqLUAyR19PkNJ1CQUE1JUpjxslQzYPkA58aBCSFqqpvGzkNkr7zXza7grPAEolB0lnqDaU1XQXx8pwA8pBmmcNSvUhdv0GZfyagm5ce_NXOhQIzwdsRN77nNIDVDFRDdCgFsyUemrmFdlQFFaGdpBTvno-hDVs0'
+            'Authorization': 'Bearer BQCz3e_leoxjTsV72s08qggwb9oG2IwrgEs3dCLnY2VAYpjmTq6_JgclVi3TrdQZjVTdF39jd2N8uvKbYszB53tmce05iDIH9kENWvssbQO3iXqilumFdmc4kKtSEKtmXESqDcIO7uKi8IXCCzS3byi5IckAAk5ilUZYKI7IKwepZy2wGWdDj8halNYj85ohxL-iWq8'
           }
         });
-
+  
         if (response.ok) {
           const data = await response.json();
           setTrackInfo({
@@ -69,30 +69,32 @@ function App() {
             artists: data.item.artists.map(artist => artist.name).join(', '),
             albumCover: data.item.album.images[0].url
           });
-        } else {
-          // No track is currently playing
-          setTrackInfo({
-            name: "",
-            artists: "",
-            albumCover: ""
-          });
-        }
-      } catch (error) {
-        console.error('Error fetching currently playing track:', error.message);
-        if (error.code >= 401 && error.code <= 599) {
+        }  if (response.status === 401) {
+          // If access token expired
           setTrackInfo({
             name: 'Token Expired',
             artists: 'Ishaan will fix it asap',
             albumCover: '' // You can add a default image here if needed
           });
+        } else {
+          // If other error
+          throw new Error('Failed to fetch currently playing track');
         }
+      } catch (error) {
+        console.error('Error fetching currently playing track:', error.message);
+        // Clear track info in case of error
+        setTrackInfo({});
       }
     };
-
+  
     const intervalId = setInterval(fetchTrackInfo, 7000); // Fetch track info every 15 seconds
-
+  
+    // Fetch track info immediately after component mounts
+    fetchTrackInfo();
+  
     return () => clearInterval(intervalId);
-  }, [])
+  }, []);
+  
 
  
   return (

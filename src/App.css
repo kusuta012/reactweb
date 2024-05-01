@@ -392,8 +392,7 @@ nav ul li button:hover { /* Apply same hover effect */
 }
 
 #track-info {
-  display: flex; /* Hide track info by default */
-  flex-direction: column;
+  display: none; /* Hide track info by default */
   align-items: center; /* Center items horizontally */
   text-align: center; /* Center text horizontally */
   position: absolute;
