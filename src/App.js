@@ -58,7 +58,7 @@ function App() {
       try {
         const response = await fetch('https://api.spotify.com/v1/me/player/currently-playing', {
           headers: {
-            'Authorization': 'Bearer BQCz3e_leoxjTsV72s08qggwb9oG2IwrgEs3dCLnY2VAYpjmTq6_JgclVi3TrdQZjVTdF39jd2N8uvKbYszB53tmce05iDIH9kENWvssbQO3iXqilumFdmc4kKtSEKtmXESqDcIO7uKi8IXCCzS3byi5IckAAk5ilUZYKI7IKwepZy2wGWdDj8halNYj85ohxL-iWq8'
+            'Authorization': 'Bearer BQBzzMMPD7qUlO_kNr7toVsO-TjXsj2SWq-1iMDH_ElMFafeUyR5FGJOoPm6bS77q0qV1_WSb9-pbyxWgBp9l7Cqb94-rfOetWsQEmw1zzD4dCzEg4B-s1P6Nwo5sdCmSZPc4BaNc7PLs8w-hFH4WYw5I-n2CISujYgxj9Zk3hDEbMpPXoz6XTDOpyOAjPu83RhRTe'
           }
         });
     
