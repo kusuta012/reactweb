@@ -59,7 +59,7 @@ const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 
 useEffect(() => {
-  const fetchTrackInfo = async () => {
+  const fetchTrackInfo = async (accessToken) => {
     try {
       const response = await fetch(
         "https://api.spotify.com/v1/me/player/currently-playing",
@@ -83,8 +83,7 @@ useEffect(() => {
       } else if (response.status === 401) {
         console.log("Access token expired, attempting to refresh token...");
         await refreshToken();
-        // Retry fetching track info after token refresh
-        return;
+        // No need to refetch track info here, it will be triggered when access token is updated
       } else {
         // If other error
         throw new Error("Failed to fetch currently playing track");
@@ -99,43 +98,45 @@ useEffect(() => {
   const refreshToken = async () => {
     try {
       const response = await fetch("https://accounts.spotify.com/api/token", {
-        method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: new URLSearchParams({
-        grant_type: 'refresh_token',
-        refresh_token: refreshToken,
-        client_id: clientId
-      }),
-    })
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          grant_type: "refresh_token",
+          refresh_token: refreshToken,
+          client_id: clientId,
+          client_secret: clientSecret,
+        }),
+      });
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Access token refreshed successfully:", data.access_token);
-        // Update access token
+        console.log("Token refreshed successfully:", data);
+        // Update access token and refresh token
         setAccessToken(data.access_token);
-        // Retry fetching track info after token refresh
-        await fetchTrackInfo();
+        setRefreshToken(data.refresh_token);
+        // Retry fetching track info with the new access token
+        await fetchTrackInfo(data.access_token);
       } else {
-        console.error("Failed to refresh access token:", response.statusText);
-        throw new Error("Failed to refresh access token");
+        console.error("Failed to refresh token:", response.statusText);
+        throw new Error("Failed to refresh token");
       }
     } catch (error) {
-      console.error("Error refreshing access token:", error.message);
+      console.error("Error refreshing token:", error.message);
       // Handle token refresh failure
     }
   };
 
   // Fetch track info immediately after component mounts
-  fetchTrackInfo();
+  fetchTrackInfo(accessToken);
 
   // Set interval to fetch track info every 7 seconds
-  const intervalId = setInterval(fetchTrackInfo, 7000);
+  const intervalId = setInterval(() => fetchTrackInfo(accessToken), 7000);
 
   // Clear interval and stop fetching when component unmounts
   return () => clearInterval(intervalId);
-}, []); // No dependencies, so this effect runs only once on mount
+}, [accessToken]); // Trigger effect whenever accessToken changes
 
 
  
