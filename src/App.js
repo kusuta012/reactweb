@@ -7,6 +7,7 @@ import spotifyLogo from "./logos/spot.png";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
+
 function App() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [trackInfo, setTrackInfo] = useState({
@@ -52,55 +53,90 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchTrackInfo = async () => {
-      try {
-        const response = await fetch(
-          "https://api.spotify.com/v1/me/player/currently-playing",
-          {
-            headers: {
-              Authorization:
-                "Bearer BQD4wbaf-eIlhHmR9Rji0-UEPN1KT3L59mQHtVZa53aiKqVQitAlWhhxRrnyIFKrrcORPaU6aL3vOqaNhLcir4gy8Ifs3QDYn3v4jKcgN9-El6873FDWGvaFprKOMr2hjt3Urxtv7uqq35p7MoToXFKJe_ZthAECC7hMK_7gPukxCE5ZQ5wp8F9xDJPz1Mbiu2aKp_k",
-            },
-          }
-        );
 
-        console.log("Response status:", response.status);
+  require('dotenv').config();
 
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Track data:", data);
-          setTrackInfo({
-            name: data.item.name,
-            artists: data.item.artists.map((artist) => artist.name).join(", "),
-            albumCover: data.item.album.images[0].url,
-          });
-        } else if (response.status === 401) {
-          console.log("Access token expired");
-          // If access token expired
-          setTrackInfo({
-            name: "Token Expired",
-            artists: "Ishaan will fix it asap",
-            albumCover: "", // You can add a default image here if needed
-          });
-        } else {
-          // If other error
-          throw new Error("Failed to fetch currently playing track");
+const clientId = process.env.SPOTIFY_CLIENT_ID;
+const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
+
+useEffect(() => {
+  const fetchTrackInfo = async () => {
+    try {
+      const response = await fetch(
+        "https://api.spotify.com/v1/me/player/currently-playing",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
-      } catch (error) {
-        console.error("Error fetching currently playing track:", error.message);
-        // Clear track info in case of error
-        setTrackInfo({});
+      );
+
+      console.log("", response.status);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Track data:", data);
+        setTrackInfo({
+          name: data.item.name,
+          artists: data.item.artists.map((artist) => artist.name).join(", "),
+          albumCover: data.item.album.images[0].url,
+        });
+      } else if (response.status === 401) {
+        console.log("");
+        // If access token expired, refresh token
+        await refreshtoken();
+        // Retry fetching track info
+        await fetchTrackInfo();
+      } else {
+        // If other error
+        throw new Error("Failed to fetch currently playing track");
       }
-    };
+    } catch (error) {
+      console.error("Error fetching currently playing track:", error.message);
+      // Clear track info in case of error
+      setTrackInfo({});
+    }
+  };
 
-    const intervalId = setInterval(fetchTrackInfo, 7000); // Fetch track info every 15 seconds
+  const refreshtoken = async () => {
+    try {
+      const response = await fetch("https://accounts.spotify.com/api/token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          grant_type: "refresh_token",
+          refresh_token: refreshToken,
+          client_id: clientId,
+          client_secret: clientSecret,
+        }),
+      });
 
-    // Fetch track info immediately after component mounts
-    fetchTrackInfo();
+      if (response.ok) {
+        const data = await response.json();
+        // Update access token
+        setAccessToken(data.access_token);
+      } else {
+        throw new Error("Failed to refresh access token");
+      }
+    } catch (error) {
+      console.error("Error refreshing access token:", error.message);
+      // Handle token refresh failure
+    }
+  };
 
-    return () => clearInterval(intervalId);
-  }, []);
+  const intervalId = setInterval(fetchTrackInfo, 7000); // Fetch track info every 7 seconds
+
+  // Fetch track info immediately after component mounts
+  fetchTrackInfo();
+
+  return () => clearInterval(intervalId);
+}, []);
+
+ 
+  
 
   return (
     <>
