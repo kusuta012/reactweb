@@ -12,7 +12,7 @@ const Projects = () => {
       githubLink: "https://github.com/kusuta012/Krack", // Add your GitHub link here
     },
     {
-      title: "Automated Code Quality Improvement System",
+      title2: "Automated Code Quality Improvement System",
       image: project2Image,
       githubLink: "https://acqis.onrender.com",
     },
