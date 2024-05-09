@@ -99,17 +99,16 @@ useEffect(() => {
   const refreshToken = async () => {
     try {
       const response = await fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          grant_type: "refresh_token",
-          refresh_token: refreshToken,
-          client_id: clientId,
-          client_secret: clientSecret,
-        }),
-      });
+        method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        grant_type: 'refresh_token',
+        refresh_token: refreshToken,
+        client_id: clientId
+      }),
+    })
 
       if (response.ok) {
         const data = await response.json();
