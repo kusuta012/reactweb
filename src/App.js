@@ -53,7 +53,7 @@ function App() {
     };
   }, []);
 
-const [accessToken, setAccessToken] = useState('');
+const [accessToken, setAccessToken, setRefreshToken] = useState('');
 const clientId = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
