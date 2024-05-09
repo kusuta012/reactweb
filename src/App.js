@@ -70,7 +70,7 @@ useEffect(() => {
         }
       );
 
-      console.log("", response.status);
+      console.log("Response status:", response.status);
 
       if (response.ok) {
         const data = await response.json();
@@ -84,8 +84,7 @@ useEffect(() => {
         console.log("");
         // If access token expired, refresh token
         await refreshtoken();
-        // Retry fetching track info
-        await fetchTrackInfo();
+        // No need to refetch track info here, it will be triggered when access token is updated
       } else {
         // If other error
         throw new Error("Failed to fetch currently playing track");
@@ -130,8 +129,10 @@ useEffect(() => {
   // Fetch track info immediately after component mounts
   fetchTrackInfo();
 
+  // Clear interval and stop fetching when component unmounts
   return () => clearInterval(intervalId);
-}, []);
+}, [accessToken]); // Trigger effect whenever accessToken changes
+
 
  
   
