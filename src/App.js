@@ -81,10 +81,10 @@ useEffect(() => {
           albumCover: data.item.album.images[0].url,
         });
       } else if (response.status === 401) {
-        console.log("");
-        // If access token expired, refresh token
-        await refreshtoken();
-        // No need to refetch track info here, it will be triggered when access token is updated
+        console.log("Access token expired, attempting to refresh token...");
+        await refreshToken();
+        // Retry fetching track info after token refresh
+        return;
       } else {
         // If other error
         throw new Error("Failed to fetch currently playing track");
@@ -96,7 +96,7 @@ useEffect(() => {
     }
   };
 
-  const refreshtoken = async () => {
+  const refreshToken = async () => {
     try {
       const response = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",
@@ -113,9 +113,13 @@ useEffect(() => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log("Access token refreshed successfully:", data.access_token);
         // Update access token
         setAccessToken(data.access_token);
+        // Retry fetching track info after token refresh
+        await fetchTrackInfo();
       } else {
+        console.error("Failed to refresh access token:", response.statusText);
         throw new Error("Failed to refresh access token");
       }
     } catch (error) {
@@ -124,14 +128,15 @@ useEffect(() => {
     }
   };
 
-  const intervalId = setInterval(fetchTrackInfo, 7000); // Fetch track info every 7 seconds
-
   // Fetch track info immediately after component mounts
   fetchTrackInfo();
 
+  // Set interval to fetch track info every 7 seconds
+  const intervalId = setInterval(fetchTrackInfo, 7000);
+
   // Clear interval and stop fetching when component unmounts
   return () => clearInterval(intervalId);
-}, [accessToken]); // Trigger effect whenever accessToken changes
+}, []); // No dependencies, so this effect runs only once on mount
 
 
  
