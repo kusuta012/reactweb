@@ -299,7 +299,7 @@ nav ul li button:hover {
 
 .project-image:hover {
   filter: grayscale(100%);
-  filter: contrast(3%) /* Convert the image to grayscale on hover */
+  filter: contrast(50%) /* Convert the image to grayscale on hover */
 }
 
 .project-title {
