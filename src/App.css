@@ -294,13 +294,12 @@ nav ul li button:hover {
   height: auto;
   border-radius: 8px;
   object-fit: cover; /* Ensure the image covers the entire container */
-  transition: filter 0.3s ease; /* Smooth transition effect */
+  transition: filter 0.3s ease;
+  filter: grayscale(100%);
+  filter: contrast(70%)  /* Smooth transition effect */
 }
 
-.project-image:hover {
-  filter: grayscale(100%);
-  filter: contrast(50%) /* Convert the image to grayscale on hover */
-}
+
 
 .project-title {
   position: absolute;
@@ -311,15 +310,13 @@ nav ul li button:hover {
   font-size: 20px; /* Adjust font size as needed */
   font-weight: bold;
   text-align: center;
-  opacity: 0; /* Initially hidden */
+  opacity: 1; 
   transition: opacity 0.3s ease; /* Smooth transition effect */
   pointer-events: none; /* Ignore pointer events */
 }
 
 
-.project-card:hover .project-title {
-  opacity: 1; /* Show title on hover */
-}
+
 
 
 /* popup.css */
