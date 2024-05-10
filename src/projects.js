@@ -1,6 +1,4 @@
-// projects.js
-
-import React from "react";
+import React, { useState, useEffect } from "react";
 import project1Image from "./images/project1.png";
 import project2Image from "./images/project2.png";
 
@@ -12,12 +10,42 @@ const Projects = () => {
       githubLink: "https://github.com/kusuta012/Krack", // Add your GitHub link here
     },
     {
-      title: "Automated Code Quality Improvement System",
+      title: "",
       image: project2Image,
-      githubLink: "https://acqis.onrender.com",
+      githubLink: "https://ishaandev.vercel.app",
     },
     // Add more projects as needed
   ];
+
+  const [showPopup, setShowPopup] = useState(false);
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      const now = new Date();
+      const targetTime = new Date();
+      targetTime.setHours(18, 0, 0); // 6 PM IST
+
+      if (now >= targetTime) {
+        setShowPopup(true);
+        clearInterval(timerInterval);
+      }
+    }, 1000 * 60); // Check every minute
+
+    return () => clearInterval(timerInterval);
+  }, []);
+
+  useEffect(() => {
+    // Check local storage if the popup has been shown previously
+    const popupShown = localStorage.getItem("popupShown");
+    if (popupShown === "true") {
+      setShowPopup(true);
+    }
+  }, []);
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
+    localStorage.setItem("popupShown", "true");
+  };
 
   return (
     <div className="container mx-auto py-8 projects-container" id="projects">
@@ -30,6 +58,13 @@ const Projects = () => {
               <img src={project.image} alt={project.title} className="project-image" />
             </a>
             <h3 className="project-title">{project.title}</h3>
+            {showPopup && (
+              <div className="popup">
+                <h2>Time's Up!</h2>
+                <p>Popup content...</p>
+                <button onClick={handleClosePopup}>Close</button>
+              </div>
+            )}
           </div>
         ))}
       </div>
