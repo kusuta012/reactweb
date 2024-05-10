@@ -51,6 +51,13 @@ const Projects = () => {
     <div className="container mx-auto py-8 projects-container" id="projects">
       <h2 className="text-2xl font-bold mb-4">Projects</h2>
       <div className="space4"></div>
+      {showPopup && (
+        <div className="popup" style={{ position: 'absolute', top: 0, left: 0, width: '100%' }}>
+          <h2>Time's Up!</h2>
+          <p>Popup content...</p>
+          <button onClick={handleClosePopup}>Close</button>
+        </div>
+      )}
       <div className="projects-grid">
         {projects.map((project, index) => (
           <div className="project-card" key={index}>
@@ -58,13 +65,6 @@ const Projects = () => {
               <img src={project.image} alt={project.title} className="project-image" />
             </a>
             <h3 className="project-title">{project.title}</h3>
-            {showPopup && (
-              <div className="popup">
-                <h2>Time's Up!</h2>
-                <p>Popup content...</p>
-                <button onClick={handleClosePopup}>Close</button>
-              </div>
-            )}
           </div>
         ))}
       </div>
