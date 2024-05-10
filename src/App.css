@@ -294,9 +294,7 @@ nav ul li button:hover {
   height: auto;
   border-radius: 8px;
   object-fit: cover; /* Ensure the image covers the entire container */
-  transition: filter 0.3s ease;
-  filter: grayscale(100%);
-  filter: contrast(70%)  /* Smooth transition effect */
+  filter: contrast(75%)  /* Smooth transition effect */
 }
 
 
@@ -313,56 +311,6 @@ nav ul li button:hover {
   opacity: 1; 
   transition: opacity 0.3s ease; /* Smooth transition effect */
   pointer-events: none; /* Ignore pointer events */
-}
-
-
-
-
-
-/* popup.css */
-
-.popup {
-  position: absolute; /* Position the popup on top */
-  top: 0;
-  left: 0;
-  width: 100%; /* Ensure popup covers entire viewport */
-  height: 100%; /* Match viewport height */
-  background-color: rgba(0, 0, 0, 0.5); /* Semitransparent background */
-  color: #fff; /* White text for readability */
-  display: flex;
-  justify-content: center; /* Center content horizontally */
-  align-items: center; /* Center content vertically */
-  flex-direction: column; /* Stack content vertically */
-  z-index: 999; /* Higher z-index to ensure it appears on top */
-  opacity: 0; /* Initially hide the popup */
-  transition: opacity 0.3s ease-in-out; /* Smooth fade-in effect */
-}
-
-.popup.show {
-  opacity: 1; /* Show the popup when the showPopup state is true */
-}
-
-.popup h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-}
-
-.popup p {
-  line-height: 1.5; /* Adjust line spacing for better readability */
-}
-
-.popup button {
-  background-color: #333;
-  color: #fff;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-
-.popup button:hover {
-  background-color: #444;
 }
 
 
