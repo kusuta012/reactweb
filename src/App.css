@@ -71,7 +71,7 @@ nav ul li:last-child {
 nav ul li a,
 nav ul li button {
   /* Apply same styles to button */
-  color: #5f374b;
+  color: #d74b4b;
   background-color: transparent;
   border: none;
   text-decoration: none;
@@ -84,7 +84,7 @@ nav ul li button:hover {
   /* Apply same hover effect */
   background-color: transparent;
   border: none;
-  color: #eabe6c;
+  color: #be673c;
   cursor: pointer; /* Ensure cursor changes on hover */
 }
 
