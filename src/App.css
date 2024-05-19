@@ -47,6 +47,7 @@ nav {
 
 nav img {
   height: 40px; /* Adjust the height of the logo */
+  border-radius: 2px;
 }
 
 nav ul {
