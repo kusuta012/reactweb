@@ -9,9 +9,9 @@ const skills = [
   { name: "HTML", logo: htmlLogo, proficiency: 75 },
   { name: "CSS", logo: cssLogo, proficiency: 35 },
   { name: "JavaScript", logo: jsLogo, proficiency: 40 },
-  { name: "Node.js", logo: nodejsLogo, proficiency: 35 },
+  { name: "Node.js", logo: nodejsLogo, proficiency: 12 },
   { name: "Python", logo: pythonLogo, proficiency: 95},
-  { name: "Rust", logo: rustLogo, proficiency: 15}
+  { name: "Rust", logo: rustLogo, proficiency: 2}
 ];
 
 export default skills;
