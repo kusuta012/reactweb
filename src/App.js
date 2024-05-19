@@ -7,7 +7,6 @@ import spotifyLogo from "./logos/spot.png";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import "./App.css";
 
-
 function App() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
   const [trackInfo, setTrackInfo] = useState({
@@ -53,94 +52,90 @@ function App() {
     };
   }, []);
 
-const [accessToken, setAccessToken, setRefreshToken] = useState('');
-const clientId = process.env.SPOTIFY_CLIENT_ID;
-const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
+  const [accessToken, setAccessToken, setRefreshToken] = useState("");
+  const clientId = process.env.SPOTIFY_CLIENT_ID;
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+  const refreshToken = process.env.SPOTIFY_REFRESH_TOKEN;
 
-useEffect(() => {
-  const fetchTrackInfo = async (accessToken) => {
-    try {
-      const response = await fetch(
-        "https://api.spotify.com/v1/me/player/currently-playing",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+  useEffect(() => {
+    const fetchTrackInfo = async (accessToken) => {
+      try {
+        const response = await fetch(
+          "https://api.spotify.com/v1/me/player/currently-playing",
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        console.log("Response status:", response.status);
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Track data:", data);
+          setTrackInfo({
+            name: data.item.name,
+            artists: data.item.artists.map((artist) => artist.name).join(", "),
+            albumCover: data.item.album.images[0].url,
+          });
+        } else if (response.status === 401) {
+          console.log("Access token expired, attempting to refresh token...");
+          await refreshToken();
+          // No need to refetch track info here, it will be triggered when access token is updated
+        } else {
+          // If other error
+          throw new Error("Failed to fetch currently playing track");
         }
-      );
+      } catch (error) {
+        console.error("Error fetching currently playing track:", error.message);
+        // Clear track info in case of error
+        setTrackInfo({});
+      }
+    };
 
-      console.log("Response status:", response.status);
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Track data:", data);
-        setTrackInfo({
-          name: data.item.name,
-          artists: data.item.artists.map((artist) => artist.name).join(", "),
-          albumCover: data.item.album.images[0].url,
+    const refreshToken = async () => {
+      try {
+        const response = await fetch("https://accounts.spotify.com/api/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            grant_type: "refresh_token",
+            refresh_token: refreshToken,
+            client_id: clientId,
+            client_secret: clientSecret,
+          }),
         });
-      } else if (response.status === 401) {
-        console.log("Access token expired, attempting to refresh token...");
-        await refreshToken();
-        // No need to refetch track info here, it will be triggered when access token is updated
-      } else {
-        // If other error
-        throw new Error("Failed to fetch currently playing track");
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Token refreshed successfully:", data);
+          // Update access token and refresh token
+          setAccessToken(data.access_token);
+          setRefreshToken(data.refresh_token);
+          // Retry fetching track info with the new access token
+          await fetchTrackInfo(data.access_token);
+        } else {
+          console.error("Failed to refresh token:", response.statusText);
+          throw new Error("Failed to refresh token");
+        }
+      } catch (error) {
+        console.error("Error refreshing token:", error.message);
+        // Handle token refresh failure
       }
-    } catch (error) {
-      console.error("Error fetching currently playing track:", error.message);
-      // Clear track info in case of error
-      setTrackInfo({});
-    }
-  };
+    };
 
-  const refreshToken = async () => {
-    try {
-      const response = await fetch("https://accounts.spotify.com/api/token", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: new URLSearchParams({
-          grant_type: "refresh_token",
-          refresh_token: refreshToken,
-          client_id: clientId,
-          client_secret: clientSecret,
-        }),
-      });
+    // Fetch track info immediately after component mounts
+    fetchTrackInfo(accessToken);
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Token refreshed successfully:", data);
-        // Update access token and refresh token
-        setAccessToken(data.access_token);
-        setRefreshToken(data.refresh_token);
-        // Retry fetching track info with the new access token
-        await fetchTrackInfo(data.access_token);
-      } else {
-        console.error("Failed to refresh token:", response.statusText);
-        throw new Error("Failed to refresh token");
-      }
-    } catch (error) {
-      console.error("Error refreshing token:", error.message);
-      // Handle token refresh failure
-    }
-  };
+    // Set interval to fetch track info every 7 seconds
+    const intervalId = setInterval(() => fetchTrackInfo(accessToken), 7000);
 
-  // Fetch track info immediately after component mounts
-  fetchTrackInfo(accessToken);
-
-  // Set interval to fetch track info every 7 seconds
-  const intervalId = setInterval(() => fetchTrackInfo(accessToken), 7000);
-
-  // Clear interval and stop fetching when component unmounts
-  return () => clearInterval(intervalId);
-}, [accessToken]); // Trigger effect whenever accessToken changes
-
-
- 
-  
+    // Clear interval and stop fetching when component unmounts
+    return () => clearInterval(intervalId);
+  }, [accessToken]); // Trigger effect whenever accessToken changes
 
   return (
     <>
@@ -148,33 +143,36 @@ useEffect(() => {
         className="light-bokeh"
         style={{ left: cursorPosition.x, top: cursorPosition.y }}
       ></div>
-      <header className="container mx-auto py-4">
-        <nav className="flex items-center justify-between px-4 py-2 bg-gray-800">
-          <div>
-            <button onClick={scrollToTop} className="logo-button">
-              <img
-                src={process.env.PUBLIC_URL + "/weblogo.ico"}
-                alt="Ishaan"
-                className="h-10 w-auto"
-              />
-            </button>
-          </div>
-          <ul className="flex space-x-4">
-            <li>
-              <button onClick={scrollToAbout}>About Me</button>
-            </li>
-            <li>
-              <button onClick={scrollToSkills}>Skills</button>
-            </li>
-            <li>
-              <button onClick={scrollToProjects}>Projects</button>
-            </li>
-            <li>
-              <button onClick={scrollToContact}>Contact</button>
-            </li>
-          </ul>
-        </nav>
-      </header>
+      <div className="header-container ">
+        <header className="flex">
+          <nav className="flex items-center justify-between px-4 py-2">
+            <div>
+              <button onClick={scrollToTop} className="logo-button">
+                <img
+                  src={process.env.PUBLIC_URL + "/weblogo.ico"}
+                  alt="Ishaan"
+                  className="h-10 w-auto"
+                />
+              </button>
+            </div>
+            <ul className="flex space-x-4">
+              <li>
+                <button onClick={scrollToAbout}>About Me</button>
+              </li>
+              <li>
+                <button onClick={scrollToSkills}>Skills</button>
+              </li>
+              <li>
+                <button onClick={scrollToProjects}>Projects</button>
+              </li>
+              <li>
+                <button onClick={scrollToContact}>Contact</button>
+              </li>
+            </ul>
+          </nav>
+        </header>
+        
+      </div>
       <div className="container mx-auto flex flex-col justify-center h-full">
         <div className="text-center md:text-left mb-8">
           <div className="text-2xl md:text-4xl mt-4">
@@ -257,6 +255,8 @@ useEffect(() => {
           )}
         </div>
       </div>
+      
+
     </>
   );
 }
