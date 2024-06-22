@@ -29,7 +29,7 @@ const ContactMe = () => {
             <FontAwesomeIcon icon={faGithub} size="2x" bounce />
           </a>
           <a
-            href="https://www.instagram.com/echo_ishaan/"
+            href="https://www.instagram.com/dnd_ishaan/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500 hover:underline icon-link"
