@@ -211,8 +211,7 @@ function App() {
           <div className="mt-8"></div>
           <p>
             I also recently made a Discord Bot which is has plenty of commands
-            to manage your server. Its Name is Blimpo , which would be soon be
-            verified by discord in late 2024.
+            to manage your server. Its Name is Krack.
           </p>
           <div className="mt-8"></div>
           <p>Here are a few technologies I’ve been working with recently:</p>
