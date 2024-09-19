@@ -1,9 +1,9 @@
-import htmlLogo from "./logos/html.png";
-import cssLogo from "./logos/css.png";
-import jsLogo from "./logos/js.png";
-import nodejsLogo from "./logos/nodejs.png";
-import pythonLogo from "./logos/python.png";
-import rustLogo from "./logos/rust.png";
+import htmlLogo from "./logos/html-5.png";
+import cssLogo from "./logos/css-3.png";
+import jsLogo from "./logos/js1.png";
+import nodejsLogo from "./logos/nodejs-1.png";
+import pythonLogo from "./logos/python1.png";
+import rustLogo from "./logos/rust-1.png";
 
 const skills = [
   { name: "HTML", logo: htmlLogo, proficiency: 75 },
