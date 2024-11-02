@@ -5,10 +5,13 @@ import Projects from "./projects";
 import ContactMe from "./contactme";
 import spotifyLogo from "./logos/spot.png";
 import { SpeedInsights } from "@vercel/speed-insights/react";
+import Confetti from 'react-confetti';
+import confettilogo from "./logos/conetti.svg";
 import "./App.css";
 
 function App() {
   const [cursorPosition, setCursorPosition] = useState({ x: 0, y: 0 });
+  const [showConfetti, setShowConfetti] = useState(false);
   const [trackInfo, setTrackInfo] = useState({
     name: "",
     artists: "",
@@ -137,8 +140,15 @@ function App() {
     return () => clearInterval(intervalId);
   }, [accessToken]); // Trigger effect whenever accessToken changes
 
+  // Move triggerConfetti inside the main function body, before the return statement
+  const triggerConfetti = () => {
+    setShowConfetti(true);
+    setTimeout(() => setShowConfetti(false), 5000); // Show confetti for 5 seconds
+  };
+
   return (
     <>
+      {showConfetti && <Confetti />}
       <div
         className="light-bokeh"
         style={{ left: cursorPosition.x, top: cursorPosition.y }}
@@ -156,6 +166,11 @@ function App() {
               </button>
             </div>
             <ul className="flex space-x-4">
+              <li>
+                <button onClick={triggerConfetti} className="flex items-center gap-2">
+                  <img src={confettilogo} alt="Confetti" className="h-5 w-5" />
+                </button>
+              </li>
               <li>
                 <button onClick={scrollToAbout}>About Me</button>
               </li>
