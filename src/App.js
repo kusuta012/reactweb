@@ -6,7 +6,7 @@ import ContactMe from "./contactme";
 import spotifyLogo from "./logos/spot.png";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import Confetti from 'react-confetti';
-import confettilogo from "./logos/conetti.svg";
+import confettilogo from "./logos/confetti.svg";
 import "./App.css";
 
 function App() {
